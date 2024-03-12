@@ -6,18 +6,18 @@ int main(int argc, char *argv[])
 {
 	printf("%d: Running pipe test!\n", syscall_process_self());
 	int w = syscall_open_pipe();
-	syscall_object_set_blocking(w, 0);
 	int x = syscall_process_fork();
 	if(x) {
+		char buf[] = "Hello World\n";
 		printf("%d: Writing...\n", syscall_process_self());
-		syscall_object_dup(w, KNO_STDOUT);
+		syscall_object_write(w, buf, strlen(buf), 0);
 		printf("Testing!\n");
 		syscall_process_sleep(1000);
 	} else {
 		printf("%d: Reading...\n", syscall_process_self());
 		int r;
-		char buf[10];
-		while(!(r = syscall_object_read(w, buf, 10))) {
+		char buf[20];
+		while(!(r = syscall_object_read(w, buf, 20))) {
 			syscall_process_yield();
 		}
 		printf("%d: I read %d chars from my brother\n", syscall_process_self(), r);
