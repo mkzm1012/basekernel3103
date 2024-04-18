@@ -341,7 +341,6 @@ void run_all_waiting()
 		printf("pid: %d, priority: %d\n", p->pid, p->node.priority);
 		list_push_tail(&ready_list, &p->node);
 	}
-	// print_list(&ready_list);
 }
 
 int allow_preempt = 0;
