@@ -245,41 +245,6 @@ struct process *process_create()
 	return p;
 }
 
-struct process *pprocess_create(int priority)
-{
-	struct process *p;
-	p = page_alloc(1);
-
-	p->pid = process_allocate_pid();
-	process_table[p->pid] = p;
-
-	p->pagetable = pagetable_create();
-	pagetable_init(p->pagetable);
-
-	p->vm_data_size = 0;
-	p->vm_stack_size = 0;
-
-	process_data_size_set(p, 2 * PAGE_SIZE);
-	process_stack_size_set(p, 2 * PAGE_SIZE);
-
-	p->kstack = page_alloc(1);
-	p->kstack_top = p->kstack + PAGE_SIZE - 8;
-	p->kstack_ptr = p->kstack_top - sizeof(struct x86_stack);
-
-	process_kstack_reset(p, PROCESS_ENTRY_POINT);
-
-	// XXX table should be allocated
-	int i;
-	for (i = 0; i < PROCESS_MAX_OBJECTS; i++)
-	{
-		p->ktable[i] = 0;
-	}
-
-	p->state = PROCESS_STATE_READY;
-	// p->priority = priority;
-	return p;
-}
-
 void process_delete(struct process *p)
 {
 	int i;

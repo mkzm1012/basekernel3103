@@ -1,7 +1,6 @@
 #include "library/syscalls.h"
 #include "library/stdio.h"
 #include "library/errno.h"
-// #include "list.h"
 
 int create_process(const char *exec, int priority)
 {
@@ -9,11 +8,9 @@ int create_process(const char *exec, int priority)
 
     if (pfd >= 0)
     {
-        // const char *args[] = {exec, NULL};
         int pid = syscall_process_prun(pfd, 0, &exec, priority);
         if (pid > 0)
         {
-            // printf("STARTED pid: %d\n", pid);
             printf("created %s with priority %d\n", exec, priority);
         }
         else

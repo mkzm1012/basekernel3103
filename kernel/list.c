@@ -7,15 +7,6 @@ See the file LICENSE for details.
 #include "list.h"
 #include "process.h"
 
-void print_list(struct list *list)
-{
-	struct list_node *n;
-	for (n = list->head; n; n = n->next)
-	{
-		printf("priority: %d   ", n->priority);
-	}
-	printf("\n");
-}
 
 void list_push_head(struct list *list, struct list_node *node)
 {

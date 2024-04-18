@@ -30,7 +30,6 @@ See the file LICENSE for details.
 #define DEFAULT_PRIORITY  0
 struct process {
 	struct list_node node;
-	// int priority;
 	int state;
 	int exitcode;
 	int exitreason;
@@ -50,7 +49,6 @@ struct process {
 void process_init();
 
 struct process *process_create();
-struct process *pprocess_create(int priority);
 void process_delete(struct process *p);
 void process_launch(struct process *p);
 void pprocess_launch(struct process *p, int priority);
