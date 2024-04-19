@@ -59,8 +59,6 @@ void list_push_priority(struct list *list, struct list_node *node, int pri)
 	if (!list->head)
 	{
 		list_push_head_priority(list, node, pri);
-		// debug remove later
-		// print_list(list);
 		return;
 	}
 
@@ -82,15 +80,10 @@ void list_push_priority(struct list *list, struct list_node *node, int pri)
 			n->prev = node;
 			node->list = list;
 			list->size++;
-			// debug remove later
-			// print_list(list);		
-			// run_all();
 			return;
 		}
 		i++;
 	}
-	// debug remove later
-	// print_list(list);
 	list_push_tail(list, node);
 }
 

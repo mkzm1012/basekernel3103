@@ -206,7 +206,7 @@ int sys_process_wrun(int fd, int argc, const char **argv, int *fds, int fd_len)
 	return p->pid;
 }
 
-// sys_proc_run with priority
+// equal to sys_process_run with priority
 int sys_process_prun(int fd, int argc, const char **argv, int priority)
 {
 	if (!is_valid_object_type(fd, KOBJECT_FILE))
@@ -253,9 +253,9 @@ int sys_process_prun(int fd, int argc, const char **argv, int priority)
 		}
 		return r;
 	}
-	// printf("p priority: %d\n", p->priority);
 	/* Otherwise, launch the new child process. */
-	pprocess_launch(p, priority);
+	// priority process launch
+	priority_process_launch(p, priority);
 	return p->pid;
 }
 
@@ -357,13 +357,13 @@ int sys_process_stats(struct process_stats *s, int pid)
 	return process_stats(pid, s);
 }
 
-int sys_process_heap(int delta) // dynamic memory management 
+int sys_process_heap(int delta) // dynamic memory management
 {
 	process_data_size_set(current, current->vm_data_size + delta);
 	return PROCESS_ENTRY_POINT + current->vm_data_size;
 }
 
-int sys_object_list(int fd, char *buffer, int length) // Specific error messages 
+int sys_object_list(int fd, char *buffer, int length) // Specific error messages
 {
 	if (!is_valid_object(fd))
 		return KERROR_INVALID_OBJECT;
@@ -670,16 +670,17 @@ int sys_device_driver_stats(const char *name, struct device_driver_stats *stats)
 	return 0;
 }
 
+// run all blocked processes
 int sys_run_all()
-{	
+{
 	run_all_waiting();
 	return 0;
 }
 
-// Declare by chris
-int sys_make_named_pipe(char * fname)
+// add comments
+int sys_make_named_pipe(char *fname)
 {
-	printf("\n%s\n", fname);	
+	printf("\n%s\n", fname);
 	int fd = process_available_fd(current);
 	if (fd < 0)
 	{
@@ -695,8 +696,8 @@ int sys_make_named_pipe(char * fname)
 	return fd;
 }
 
-
-int sys_open_named_pipe(char * fname){
+int sys_open_named_pipe(char *fname)
+{
 	printf("\n%s\n", fname);
 	int fd = process_available_fd(current);
 	if (fd < 0)
@@ -803,11 +804,11 @@ int32_t syscall_handler(syscall_t n, uint32_t a, uint32_t b, uint32_t c, uint32_
 		return sys_run_all();
 	// Declare by chris
 	case SYSCALL_MAKE_NAMED_PIPE:
-	    // Your code to interact with the filesystem to create a named pipe
-		return sys_make_named_pipe((char *) a);
+		// Your code to interact with the filesystem to create a named pipe
+		return sys_make_named_pipe((char *)a);
 	case SYSCALL_OPEN_NAMED_PIPE:
-        	return sys_open_named_pipe((char *) a);
-	// 
+		return sys_open_named_pipe((char *)a);
+	//
 	default:
 		return KERROR_INVALID_SYSCALL;
 	}

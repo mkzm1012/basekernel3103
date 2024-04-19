@@ -5,7 +5,7 @@ USER_PROGRAMS=ball.exe clock.exe copy.exe livestat.exe manager.exe fractal.exe p
 all: $(USER_PROGRAMS)
 
 %.o: %.c
-	${CC} ${KERNEL_CCFLAGS} -I ../kernel -I ../include $< -o $@
+	${CC} ${KERNEL_CCFLAGS} -I ../include $< -o $@
 
 
 %.exe: %.o ../library/user-start.o ../library/baselib.a

@@ -266,8 +266,9 @@ void process_launch(struct process *p)
 	list_push_tail(&ready_list, &p->node);
 }
 
-void pprocess_launch(struct process *p, int priority)
-{	
+// Priority based process launching
+void priority_process_launch(struct process *p, int priority)
+{
 	list_push_priority(&blocked_list, &p->node, priority);
 }
 
@@ -332,6 +333,7 @@ static void process_switch(int newstate)
 	interrupt_unblock();
 }
 
+// push all processes from blocked_list to ready_list
 void run_all_waiting()
 {
 	printf("Running all waiting processes...\n");

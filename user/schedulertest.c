@@ -32,15 +32,17 @@ int main(int argc, char const *argv[])
     int n = 5;
 
     // change add processes here
-    const char *procs[] = {"bin/process1.exe", "bin/process2.exe", "bin/process3.exe", "bin/process4.exe", "bin/process5.exe"};
+    const char *processes[] = {"bin/process1.exe", "bin/process2.exe", "bin/process3.exe", "bin/process4.exe", "bin/process5.exe"};
 
     // change add/change priorities here
     int priorities[] = {9, 7, 2, 1, 5};
 
+    // iteratively create processes
     for (int i = 0; i < n; i++)
     {
-        create_process(procs[i], priorities[i]);
+        create_process(processes[i], priorities[i]);
     }
+    // run all processes
     syscall_run_all();
     return 0;
 }
