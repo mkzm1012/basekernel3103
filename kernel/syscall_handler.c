@@ -682,8 +682,8 @@ int sys_run_all()
 }
 
 int sys_make_named_pipe(const char *fname) {
-	if (!fname || !is_valid_string(fname)) {
-        return KERROR_INVALID_ADDRESS; 
+	if (!fname || !is_valid_path(fname)) {
+        return KERROR_INVALID_PATH; 
     }
 
 	int result = named_pipe_create(fname);
@@ -703,7 +703,7 @@ int sys_open_named_pipe(const char *fname) {
 	int fd = process_available_fd(current);
     if (fd < 0) {
 		// printf("sys_open_named_pipe: process_available_fd KERROR_NOT_FOUND \n");
-        return KERROR_NOT_FOUND;
+        return KERROR_OUT_OF_OBJECTS;
     }
 
 	// open the named pipe

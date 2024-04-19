@@ -4,20 +4,17 @@
 #include "../include/kernel/types.h"
 
 int main() {
-    printf("%d: Running named pipe test sender!\n", syscall_process_self());
+    printf("start sender.\n");
     const char *fname = "bin/named_pipe";
 
-    // message to send
-    char buffer[] = "Hello World\n";
+    char buffer[] = "Named pipe test msg\n";
     int res = syscall_make_named_pipe(fname);
-    printf("syscall_make_named_pipe: %d",res);
-    // create the named pipe
+    printf("sender: syscall_make_named_pipe:%d\n",res);
     int fd = syscall_open_named_pipe(fname);
+    printf("sender: syscall_open_named_pipe:%d\n",fd);
+
     if(fd >= 0){
-        printf("%d: Named pipe successfully open.\n", syscall_process_self());
-        printf("%d: Entering Sending process.\n", syscall_process_self());
         syscall_object_write(fd, buffer, strlen(buffer), 0); // write the message to the named pipe
-        printf("%d: Message written to named pipe.\n", syscall_process_self());
         syscall_process_sleep(1000);
         return 1; 
         } 

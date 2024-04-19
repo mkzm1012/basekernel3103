@@ -237,7 +237,7 @@ int kobject_read(struct kobject *kobject, void *buffer, int size, kernel_io_flag
 
 int kobject_write(struct kobject *kobject, void *buffer, int size, kernel_io_flags_t flags )
 {
-	printf("Entering kobject_write\n");
+	// printf("Entering kobject_write\n");
 	switch (kobject->type) {
 	case KOBJECT_WINDOW:
 		if(flags&KERNEL_IO_POST) {
@@ -268,7 +268,7 @@ int kobject_write(struct kobject *kobject, void *buffer, int size, kernel_io_fla
 			return pipe_write(kobject->data.pipe, buffer, size);
 		}
 	case KOBJECT_NAMED_PIPE:
-		printf("Entering kobject_write: case KOBJECT_NAMED_PIPE\n");
+		// printf("Entering kobject_write: case KOBJECT_NAMED_PIPE\n");
 		if(flags&KERNEL_IO_NONBLOCK) {
 			return pipe_write_nonblock(kobject->data.named_pipe, buffer, size);
 		} else {
